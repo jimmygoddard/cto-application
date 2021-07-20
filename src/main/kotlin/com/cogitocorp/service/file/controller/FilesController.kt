@@ -5,6 +5,7 @@ import com.cogitocorp.service.file.dto.FileResponse
 import com.cogitocorp.service.file.service.FileService
 import mu.KotlinLogging
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -34,7 +35,7 @@ class FilesController(val fileService: FileService) {
   }
 
   @GetMapping("/{id}")
-  fun getFile(@RequestParam id: UUID): FileResponse {
+  fun getFile(@PathVariable id: UUID): FileResponse {
     logger.info("Getting file for id=${id}")
     return FileResponse(fileService.getFile(id))
   }
