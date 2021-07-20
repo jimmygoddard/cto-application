@@ -8,7 +8,7 @@ data class File(
   val name: String,
   val size: Long,
   val timestamp: Instant,
-  val contents: ByteArray,
+  val contents: String,
   val id: UUID = UUID.randomUUID(),
 ) {
   constructor(fileEntity: FileEntity) : this(
@@ -37,7 +37,7 @@ data class File(
     result = 31 * result + name.hashCode()
     result = 31 * result + size.hashCode()
     result = 31 * result + timestamp.hashCode()
-    result = 31 * result + contents.contentHashCode()
+    result = 31 * result + contents.hashCode()
     return result
   }
 

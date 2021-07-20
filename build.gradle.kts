@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.5.2"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+	id("com.google.cloud.tools.jib") version "3.1.1"
 	kotlin("jvm") version "1.5.20"
 	kotlin("plugin.spring") version "1.5.20"
 	kotlin("plugin.jpa") version "1.5.20"
@@ -68,5 +69,31 @@ tasks.register("resolveAndLockAll") {
 			// Add any custom filtering on the configurations to be resolved
 			it.isCanBeResolved
 		}.forEach { it.resolve() }
+	}
+}
+
+val imageTag by extra {
+	val builder = StringBuilder(project.version.toString())
+	if (project.hasProperty("buildNum")) {
+		builder.append("-b").append(property("buildNum"))
+	}
+	if (project.hasProperty("gitSha")) {
+		builder.append("-").append(property("gitSha"))
+	}
+	builder.toString()
+}
+
+jib {
+	to {
+		image = "file-service"
+		tags = setOf(imageTag, "latest")
+	}
+	from {
+		image = "adoptopenjdk:11-jre"
+	}
+	container {
+		mainClass = "com.cogitocorp.service.file.FileServiceApplication"
+		creationTime = "USE_CURRENT_TIMESTAMP"
+		user = "nobody"
 	}
 }

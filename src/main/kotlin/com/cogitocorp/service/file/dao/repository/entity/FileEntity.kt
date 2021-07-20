@@ -15,7 +15,7 @@ class FileEntity(
   val name: String,
   val size: Long,
   val timestamp: Instant,
-  @Lob @Column(columnDefinition = "CLOB") val contents: ByteArray,
+  val contents: String,
   @Id val id: UUID = UUID.randomUUID(),
 ) {
   constructor(file: File) : this(file.name, file.size, file.timestamp, file.contents)

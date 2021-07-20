@@ -22,7 +22,7 @@ class FilesController(val fileService: FileService) {
   @PostMapping("/")
   fun createFile(@RequestParam file: MultipartFile): FileResponse {
     logger.info("Storing new file", file)
-    val fileToSave = File(file.name, file.size, Instant.now(), file.bytes)
+    val fileToSave = File(file.name, file.size, Instant.now(), String(file.bytes))
     val response = fileService.saveFile(fileToSave)
     return FileResponse(response)
   }
