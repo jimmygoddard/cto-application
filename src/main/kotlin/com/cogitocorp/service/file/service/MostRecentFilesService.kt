@@ -1,8 +1,8 @@
 package com.cogitocorp.service.file.service
 
-import com.cogitocorp.service.file.dto.File
+import com.cogitocorp.service.file.dto.ViewedTime
 
 interface MostRecentFilesService {
-  fun getMostRecentFiles(numFiles: Int): List<File>
-  fun addViewedFile(file: File)
+  fun getMostRecentFiles(numFiles: Int): List<ViewedTime>
+  fun addViewedFile(viewedTime: ViewedTime): ViewedTime
 }

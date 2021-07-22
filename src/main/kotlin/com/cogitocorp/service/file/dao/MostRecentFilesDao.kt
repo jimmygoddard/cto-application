@@ -1,8 +1,8 @@
 package com.cogitocorp.service.file.dao
 
-import java.util.UUID
+import com.cogitocorp.service.file.dto.ViewedTime
 
 interface MostRecentFilesDao {
-  fun getMostRecentFiles(numFiles: Int): List<UUID>
-  fun addViewedFile(fileId: UUID)
+  fun getMostRecentFiles(numFiles: Int): List<ViewedTime>
+  fun addViewedFile(viewedTime: ViewedTime): ViewedTime
 }
