@@ -16,7 +16,7 @@ class MostRecentFilesDaoImpl(
     return viewedTimes.map { ViewedTime(it) }
   }
 
-  override fun addViewedFile(viewedTime: ViewedTime): ViewedTime {
+  override fun addViewedTime(viewedTime: ViewedTime): ViewedTime {
     return ViewedTime(viewedTimeRepository.save(ViewedTimeEntity(viewedTime)))
   }
 }

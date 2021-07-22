@@ -3,7 +3,6 @@ package com.cogitocorp.service.file.controller
 import com.cogitocorp.service.file.ServerConfig
 import com.cogitocorp.service.file.dto.File
 import com.cogitocorp.service.file.dto.FileResponse
-import com.cogitocorp.service.file.dto.ViewedTime
 import com.cogitocorp.service.file.service.FileService
 import com.cogitocorp.service.file.service.MostRecentFilesService
 import mu.KotlinLogging
@@ -48,9 +47,7 @@ class FilesController(
   @GetMapping("/{id}")
   fun getFile(@PathVariable id: UUID): FileResponse {
     logger.info("Getting file. id=$id")
-    val file = fileService.getFile(id)
-    mostRecentFilesService.addViewedFile(ViewedTime(file.id))
-    return FileResponse(file)
+    return FileResponse(fileService.getFile(id))
   }
 
   @GetMapping(value = ["/{id}/zip"], produces = ["application/zip"])
@@ -62,7 +59,6 @@ class FilesController(
     response.addHeader("Content-Disposition", "attachment; filename=$fileName")
     val zipOutputStream = ZipOutputStream(response.outputStream)
     val file = fileService.getFile(id)
-    mostRecentFilesService.addViewedFile(ViewedTime(file.id))
     zipOutputStream.putNextEntry(ZipEntry(file.id.toString()))
     val fileInputStream = file.contents.byteInputStream()
     fileInputStream.copyTo(zipOutputStream)
@@ -99,9 +95,7 @@ class FilesController(
   fun getMostRecentFiles(): List<FileResponse> {
     val numFiles = serverConfig.mostRecentFilesCount
     logger.info("Getting most recent files. numFiles=$numFiles")
-    return mostRecentFilesService.getMostRecentFiles(numFiles).map {
-      FileResponse(fileService.getFile(it.fileId))
-    }
+    return mostRecentFilesService.getMostRecentFiles(numFiles).map { FileResponse(it) }
   }
 
   @GetMapping(value = ["/most-recent/zip"], produces = ["application/zip"])
@@ -115,9 +109,7 @@ class FilesController(
     val zipOutputStream = ZipOutputStream(response.outputStream)
 
     // create a list to add files to be zipped
-    val files = mostRecentFilesService.getMostRecentFiles(numFiles).map {
-      fileService.getFile(it.fileId)
-    }
+    val files = mostRecentFilesService.getMostRecentFiles(numFiles)
 
     // package files
     files.forEach {
