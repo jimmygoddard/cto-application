@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class FileDaoImpl(val fileRepository: FileRepository): FileDao {
+class FileDaoImpl(private val fileRepository: FileRepository) : FileDao {
 
   override fun saveFile(file: File): File {
     val fileEntity = FileEntity(file)

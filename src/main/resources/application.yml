@@ -6,3 +6,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 128KB
+      max-request-size: 128KB
+
+file-service:
+  most-recent-files-count: ${MOST_RECENT_FILES_COUNT:10}

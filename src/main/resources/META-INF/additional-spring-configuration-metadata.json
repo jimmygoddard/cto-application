@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "file-service.most-recent-files-count",
+      "type": "java.lang.String",
+      "description": "Number of files or return when a client requests most recent files, either zipped or not"
+    }
+  ]
+}
