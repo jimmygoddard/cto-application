@@ -11,5 +11,10 @@ import javax.persistence.Table
 @Table(name = "file_viewed_time")
 class ViewedTimeEntity(@Id val fileId: UUID, val viewedTime: Instant) {
   constructor(viewedTime: ViewedTime) : this(viewedTime.fileId, viewedTime.viewedTime)
+
+  override fun toString(): String {
+    return "ViewedTimeEntity(fileId=$fileId, viewedTime=$viewedTime)"
+  }
+
 }
 

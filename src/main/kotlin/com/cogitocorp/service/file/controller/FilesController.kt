@@ -30,15 +30,15 @@ class FilesController(
   private val serverConfig: ServerConfig,
 ) {
 
-  @PostMapping("/")
+  @PostMapping
   fun createFile(@RequestParam file: MultipartFile): FileResponse {
-    logger.info("Storing new file. file=$file")
+    logger.info("Storing new file")
     val fileToSave = File(file.name, file.size, Instant.now(), String(file.bytes))
     val response = fileService.saveFile(fileToSave)
     return FileResponse(response)
   }
 
-  @GetMapping("/")
+  @GetMapping
   fun getFiles(): List<FileResponse> {
     logger.info("Getting files")
     return fileService.getFiles().map { FileResponse(it) }

@@ -1,7 +1,7 @@
 package com.cogitocorp.service.file.dao
 
+import com.cogitocorp.service.file.dao.repository.ViewedTimeRepository
 import com.cogitocorp.service.file.dao.repository.entity.ViewedTimeEntity
-import com.cogitocorp.service.file.dao.repository.entity.ViewedTimeRepository
 import com.cogitocorp.service.file.dto.ViewedTime
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component

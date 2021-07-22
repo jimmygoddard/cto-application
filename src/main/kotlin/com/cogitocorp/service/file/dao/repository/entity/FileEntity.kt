@@ -17,5 +17,10 @@ class FileEntity(
   @Id val id: UUID = UUID.randomUUID(),
 ) {
   constructor(file: File) : this(file.name, file.size, file.timestamp, file.contents)
+
+  override fun toString(): String {
+    return "FileEntity(name='$name', size=$size, timestamp=$timestamp, contents='$contents', id=$id)"
+  }
+
 }
 
