@@ -1,0 +1,124 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://127.0.0.1:8080
+  description: Generated server url
+paths:
+  /files/:
+    get:
+      tags:
+      - files-controller
+      operationId: getFiles
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileResponse'
+    post:
+      tags:
+      - files-controller
+      operationId: createFile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+  /files/{id}:
+    get:
+      tags:
+      - files-controller
+      operationId: getFile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+  /files/{id}/zip:
+    get:
+      tags:
+      - files-controller
+      operationId: zipFile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+  /files/zip:
+    get:
+      tags:
+      - files-controller
+      operationId: zipFiles
+      responses:
+        "200":
+          description: OK
+  /files/most-recent:
+    get:
+      tags:
+      - files-controller
+      operationId: getMostRecentFiles
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileResponse'
+  /files/most-recent/zip:
+    get:
+      tags:
+      - files-controller
+      operationId: zipMostRecentFiles
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    FileResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        size:
+          type: integer
+          format: int64
+        timestamp:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
