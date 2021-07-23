@@ -2,6 +2,16 @@
 version: '3.1'
 
 services:
+  file-service:
+    image: file-service
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    environment:
+      JDBC_URL: jdbc:postgresql://db:5432/postgres
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
 
   db:
     image: postgres

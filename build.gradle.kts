@@ -96,9 +96,4 @@ jib {
   from {
     image = "adoptopenjdk:11-jre"
   }
-  container {
-    mainClass = "com.cogitocorp.service.file.FileServiceApplication"
-    creationTime = "USE_CURRENT_TIMESTAMP"
-    user = "nobody"
-  }
 }
